@@ -1,0 +1,267 @@
+{
+  "project": {
+    "working_name": "TokenLens",
+    "version": "0.1.0",
+    "status": "architecture_handoff",
+    "purpose": "Provider-agnostic observability and optimization layer for AI coding CLIs.",
+    "primary_goal": "Measure how AI CLIs are being used, classify task complexity, compare that complexity with the model/reasoning level used, normalize token telemetry, and later support recommendations, quota warnings and efficient cross-provider handoffs.",
+    "initial_providers": [
+      "OpenAI Codex CLI",
+      "Anthropic Claude Code",
+      "Google Antigravity"
+    ],
+    "future_providers": "Any provider implemented through the adapter contract."
+  },
+  "golden_rule": {
+    "id": "ZERO_SENSITIVE_DATA",
+    "priority": "NON_NEGOTIABLE",
+    "statement": "The public/core project MUST NOT contain, persist, transmit, log, commit, print, or expose personal data, sensitive data, proprietary project content, source-code content, complete prompts, credentials, authentication tokens, API keys, cookies, session identifiers, private endpoints, account identifiers, or provider secrets.",
+    "principles": [
+      "Privacy by default",
+      "Local-first telemetry",
+      "Metadata over content",
+      "Explicit opt-in for any future content capture",
+      "No secrets in source control",
+      "No provider-specific credentials in the core",
+      "Safe defaults must work without real credentials"
+    ],
+    "repository_rules": {
+      "forbidden": [
+        "Real API keys",
+        "Real access or refresh tokens",
+        "OAuth secrets",
+        "Passwords",
+        "Cookies or session files",
+        "Personal identifiers",
+        "Customer or employer data",
+        "Private source code",
+        "Full user prompts",
+        "Full AI responses",
+        "Private repository URLs",
+        "Machine-specific secrets",
+        ".env files containing real values"
+      ],
+      "allowed": [
+        "Environment-variable names",
+        "Placeholders",
+        ".env.example with fake values only",
+        "Synthetic fixtures",
+        "Anonymized metadata",
+        "Provider adapter interfaces",
+        "Public documentation",
+        "JSON Schemas",
+        "Local configuration templates"
+      ],
+      "gitignore_required_patterns": [
+        ".env",
+        ".env.*",
+        "!.env.example",
+        "*.key",
+        "*.pem",
+        "*.p12",
+        "*.pfx",
+        "secrets.*",
+        "credentials.*",
+        "*.db",
+        "*.sqlite",
+        "*.sqlite3",
+        "telemetry/",
+        "logs/"
+      ]
+    }
+  },
+  "distribution_model": {
+    "open_source_ready": true,
+    "clone_experience": "A user must be able to clone the repository and run the non-connected/core functionality without supplying any private information.",
+    "bring_your_own_credentials": true,
+    "credential_policy": "Users configure their own provider authentication locally. Credentials never become part of the repository or normalized telemetry.",
+    "extension_policy": "Users may create their own adapters, bridges, plugins, hooks or integrations without modifying the provider-agnostic core.",
+    "configuration_strategy": [
+      "Environment variables for secrets when required",
+      "Non-secret local configuration file for preferences",
+      ".env.example containing variable names and fake placeholders only",
+      "Provider-specific adapters isolated from the core",
+      "Secret validation before an adapter starts",
+      "Never serialize secrets into telemetry events"
+    ]
+  },
+  "architecture": {
+    "mode_phase_1": "observer",
+    "behavior": "Observe and measure first. Do not automatically change provider, model, reasoning level, or user workflow.",
+    "components": {
+      "core": {
+        "language": "Python",
+        "responsibilities": [
+          "Normalize events",
+          "Classify task complexity",
+          "Evaluate model/reasoning suitability",
+          "Persist privacy-safe telemetry",
+          "Expose a stable adapter contract"
+        ],
+        "must_be_provider_agnostic": true
+      },
+      "adapters": {
+        "responsibility": "Translate provider/CLI-specific events into the universal event contract.",
+        "initial": [
+          "codex",
+          "claude_code",
+          "antigravity"
+        ],
+        "rule": "Provider-specific behavior must remain inside its adapter."
+      },
+      "storage": {
+        "phase_1": "SQLite",
+        "scope": "Local machine only",
+        "content_policy": "Store normalized metadata only; never raw prompts, raw responses, source code, or credentials."
+      },
+      "crm": {
+        "phase": 2,
+        "included_now": false,
+        "note": "The future CRM/dashboard consumes normalized telemetry; it must not require changes to the core contract."
+      }
+    }
+  },
+  "universal_complexity_model": {
+    "levels": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "provider_independent": true,
+    "intent": "Represent required reasoning effort independently of provider-specific model names or controls.",
+    "initial_signals": [
+      "Task breadth",
+      "Number of dependent steps",
+      "Need for repository-wide reasoning",
+      "Debugging ambiguity",
+      "Architectural impact",
+      "Refactoring scope",
+      "Need to reconcile multiple constraints",
+      "Amount of context required"
+    ]
+  },
+  "telemetry_contract": {
+    "privacy": "metadata_only",
+    "event_example": {
+      "schema_version": "1.0",
+      "event_id": "<generated_uuid>",
+      "timestamp": "<ISO-8601>",
+      "provider": "codex|claude_code|antigravity|other",
+      "cli_version": null,
+      "project_id": "<local_anonymous_hash_or_alias>",
+      "session_id": "<local_anonymous_id>",
+      "task": {
+        "category": "coding|debugging|refactor|research|planning|other",
+        "complexity": "low|medium|high",
+        "complexity_score": null,
+        "classifier_version": "0.1.0"
+      },
+      "execution": {
+        "model": null,
+        "reasoning_level": null,
+        "duration_ms": null,
+        "success": null
+      },
+      "usage": {
+        "input_tokens": null,
+        "output_tokens": null,
+        "reasoning_tokens": null,
+        "cached_input_tokens": null,
+        "total_tokens": null
+      },
+      "quota": {
+        "remaining": null,
+        "unit": null,
+        "reset_at": null,
+        "source": null
+      },
+      "assessment": {
+        "model_fit": "underpowered|appropriate|overpowered|unknown",
+        "optimization_opportunity": null
+      }
+    },
+    "explicitly_excluded_fields": [
+      "prompt",
+      "response",
+      "source_code",
+      "file_contents",
+      "api_key",
+      "access_token",
+      "refresh_token",
+      "cookie",
+      "email",
+      "name",
+      "customer_data"
+    ]
+  },
+  "roadmap": [
+    {
+      "phase": 1,
+      "name": "Observe",
+      "deliverables": [
+        "Provider-agnostic Python core",
+        "Universal JSON event schema",
+        "SQLite telemetry store",
+        "Codex adapter",
+        "Claude Code adapter",
+        "Antigravity adapter",
+        "CLI-visible lightweight feedback where technically supported",
+        "Synthetic test fixtures",
+        "Security and privacy tests"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Recommend",
+      "deliverables": [
+        "Model/reasoning suitability recommendations",
+        "Token-use patterns",
+        "Overpowered-model warnings",
+        "Underpowered-model warnings",
+        "Quota/credit warnings where providers expose reliable data",
+        "Private CRM/dashboard integration"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Optimize and Handoff",
+      "deliverables": [
+        "Provider comparison based on observed user workloads",
+        "Standardized minimal-context handoff JSON",
+        "Context compaction strategy",
+        "Optional provider/model routing",
+        "Optimization recommendations based on empirical telemetry"
+      ]
+    }
+  ],
+  "implementation_guardrails": [
+    "Do not assume equivalent provider features when documentation does not confirm equivalence.",
+    "Unsupported telemetry fields must be null rather than inferred.",
+    "Do not scrape or bypass provider security controls to obtain usage data.",
+    "Do not capture prompt or response content merely to improve classification.",
+    "Prefer deterministic local heuristics for the first classifier so classification itself does not consume AI tokens.",
+    "Any future AI-based classifier must be optional and measurable.",
+    "Adapters must fail safely when credentials, hooks or telemetry are unavailable.",
+    "The repository must include synthetic examples so contributors can develop without real provider accounts."
+  ],
+  "handoff_to_codex": {
+    "objective": "Implement the Phase 1 foundation only.",
+    "first_milestone": "Create the repository skeleton, universal event JSON Schema, privacy-safe SQLite schema, adapter interface, synthetic fixtures and tests before implementing any real provider connection.",
+    "do_not_do_yet": [
+      "CRM integration",
+      "Automatic provider switching",
+      "Automatic model switching",
+      "Real credential setup",
+      "Prompt/response storage",
+      "Cross-provider handoff automation"
+    ],
+    "acceptance_criteria": [
+      "Core runs without any provider credentials.",
+      "Synthetic events for all three initial providers validate against the same schema.",
+      "No sensitive-data field exists in the normalized event contract.",
+      "Secrets and telemetry databases are ignored by Git.",
+      "A contributor can add a new provider through the adapter interface without changing the core event model.",
+      "Tests reject known credential patterns from fixtures intended for persistence."
+    ]
+  }
+}

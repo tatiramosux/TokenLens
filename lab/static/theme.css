@@ -1,0 +1,79 @@
+/* Reference-inspired skin only: preserves layout, content and interactions. */
+:root { color-scheme: dark; color:#f3f1f5; background:#090b0b; --green:#ed5ae5; --muted:#b4afb9; --line:#363139; }
+body { background:radial-gradient(ellipse at 8% 0%,#28122d 0,transparent 38%),#090b0b; }
+header { background:linear-gradient(110deg,#1f1024,#0b0e0e 45%); border-color:#302633; }
+.brand { color:#fff; }
+.mark,.eyebrow { color:#f66bee; }
+.lab { border-color:#694067; color:#f497ec; background:#30172f; }
+.local { color:#c6c1ca; }
+.local i { background:#51e5db; box-shadow:0 0 10px #51e5db55; }
+h1 { color:#faf7fc; font-weight:550; }
+.muted,.metrics p,.metrics small,.footnote,footer { color:#b4afb9; }
+.notice { color:#c7e8e4; background:#142622; border-color:#34534d; }
+.notice.demo { color:#f5c1ef; background:#2a152b; border-color:#674062; }
+.metrics article,.panel { background:linear-gradient(125deg,#242327,#191b1b 70%); border-color:#3e3942; border-radius:13px; box-shadow:0 9px 25px #0002; }
+.metrics article:first-child { background:radial-gradient(ellipse at 110% 0%,#67205f 0,transparent 68%),linear-gradient(135deg,#262028,#181b1b); border-color:#75486d; }
+.metrics strong { color:#fff; }
+.pill { color:#dfb7dc; background:#312330; border-color:#533c52; }
+.track { background:#37343c; }
+.track meter { accent-color:#f34ae9; }
+meter::-webkit-meter-bar { background:#37343c; border:0; }
+meter::-webkit-meter-optimum-value { background:linear-gradient(90deg,#ee43e4,#c749e8 75%,#3be6dc); }
+meter::-moz-meter-bar { background:linear-gradient(90deg,#ee43e4,#3be6dc); }
+.suggestions li:before { color:#f879ef; }
+.connection { border-color:#6a3d66; }
+.connection strong { color:#f8f4fa; }
+.connection p { color:#b4afb9; }
+.connection .state { color:#e3b9dc; }
+select,.mode select { color-scheme:dark; color:#f3edf5; background-color:#212123; background-image:url('/chevron.svg'); border-color:#706275; }
+select:hover:not(:disabled) { background-color:#302735; border-color:#c884c3; }
+select:focus-visible,button:focus-visible,a:focus-visible { outline:3px solid #50e5de; outline-offset:3px; }
+select:focus-visible { border-color:#f480ec; }
+select:disabled { background-color:#191b1c; color:#a8a1ac; border-color:#49434d; }
+select option { color:#f3edf5; background:#212123; }
+button { background:linear-gradient(110deg,#f06ae7,#cf57cf); color:#210823; border-color:#f083e7; font-weight:650; box-shadow:0 2px 12px #ed5ae51a; }
+button:hover { background:linear-gradient(110deg,#ff94f5,#e77de5); }
+th { color:#bcb5c2; border-color:#49414d; }
+td { border-color:#353138; }
+td small { color:#b4afb9; }
+tbody tr:hover { background:#ffffff04; }
+.empty span { color:#c87ec2; }
+.empty p { color:#b4afb9; }
+#save-status { color:#67e6d9; }
+.skip:focus { background:#261e29; color:#fff; }
+.dropdown-trigger { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; min-width:0; height:44px; padding:10px 12px; background:#212123; color:#f3edf5; border:1px solid #706275; border-radius:7px; box-shadow:none; font-size:14px; font-weight:400; text-align:left; }
+.dropdown-trigger>span:first-child { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.dropdown-trigger:hover { background:#302735; border-color:#c884c3; }
+.dropdown-trigger[aria-expanded=true] { background:#302335; border-color:#ef73e4; }
+.dropdown-trigger[aria-disabled=true] { opacity:1; color:#a8a1ac; background:#191b1c; border-color:#49434d; cursor:not-allowed; }
+.dropdown-chevron { width:8px; height:8px; border-right:1.7px solid #dfb7dc; border-bottom:1.7px solid #dfb7dc; transform:translateY(-2px) rotate(45deg); flex-shrink:0; margin-right:4px; }
+.dropdown-trigger[aria-expanded=true] .dropdown-chevron { transform:translateY(2px) rotate(225deg); }
+.dropdown-menu { position:fixed; z-index:1000; margin:0; padding:6px; overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:#765471 #211d24; background:#211d24; color:#f5eff8; border:1px solid #805479; border-radius:10px; box-shadow:0 14px 38px #0009; }
+.dropdown-menu[hidden] { display:none; }
+.dropdown-option { display:flex; align-items:center; position:relative; min-height:40px; padding:10px 34px 10px 12px; border:1px solid transparent; border-radius:6px; font-size:14px; line-height:1.4; cursor:pointer; overflow-wrap:anywhere; }
+.dropdown-option:hover,.dropdown-option.is-active { background:#413047; border-color:#a06596; }
+.dropdown-option[aria-selected=true] { color:#ffb7f3; background:#39233b; }
+.dropdown-option[aria-selected=true]:after { content:'✓'; position:absolute; right:12px; color:#68e8de; font-weight:700; }
+.mode .dropdown-trigger { min-width:200px; }
+td .dropdown-trigger { width:156px; font-size:13px; font-weight:400; }
+td:nth-child(6) .dropdown-trigger { width:142px; }
+@media(max-width:520px) { .dropdown-trigger,.dropdown-option { font-size:16px; } }
+@media(forced-colors:active) {
+ body,header,.metrics article,.panel,button,select,.mode select { background:Canvas; color:CanvasText; box-shadow:none; }
+ select,.mode select { appearance:auto; background-image:none; }
+ .dropdown-menu,.dropdown-trigger,.dropdown-option { background:Canvas; color:CanvasText; border-color:ButtonText; }
+ .dropdown-option.is-active,.dropdown-option[aria-selected=true] { background:Highlight; color:HighlightText; }
+}
+
+.dropdown-trigger { cursor:pointer; }
+.dropdown-trigger:focus-visible { outline:3px solid #50e5de; outline-offset:3px; }
+
+.chart-legend { display:flex; flex-wrap:wrap; gap:12px 22px; margin-bottom:18px; font-size:12px; color:#d3c9d9; }
+.chart-legend span { display:flex; align-items:center; gap:8px; }
+.chart-legend i { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.timeline { overflow-x:auto; }
+.timeline svg { display:block; width:100%; min-width:600px; max-height:340px; }
+.timeline p { color:#b4afb9; padding:40px 0; text-align:center; }
+.chart-data { margin-top:18px; color:#c8bfce; font-size:12px; }
+.chart-data summary { cursor:pointer; width:fit-content; padding:8px 0; }
+.chart-data summary:focus-visible { outline:3px solid #50e5de; outline-offset:3px; }

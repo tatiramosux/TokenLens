@@ -1,0 +1,6 @@
+{
+  "name": "tokenlens-lab-tests",
+  "private": true,
+  "scripts": { "test": "node scripts/test_chart.cjs && node scripts/test_dropdown.cjs" },
+  "devDependencies": { "jsdom": "26.1.0" }
+}
