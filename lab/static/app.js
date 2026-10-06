@@ -7,6 +7,7 @@ const nf = new Intl.NumberFormat('pt-BR');
 function node(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;}
 function options(select,dict){for(const [value,text] of Object.entries(dict)){const o=node('option',text);o.value=value;select.append(o);}}
 options($('category'),categories);
+if(new URLSearchParams(location.search).get('mode')==='demo')$('mode').value='demo';
 function select(dict,value,label){const el=node('select');el.setAttribute('aria-label',label);options(el,dict);el.value=value;return el;}
 async function get(url,opts){const res=await fetch(url,opts);if(!res.ok)throw Error('Falha local');return res.json();}
 let generation=0;

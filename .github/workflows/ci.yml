@@ -26,6 +26,7 @@ jobs:
       - run: npx --yes pnpm@11.19.0 install --frozen-lockfile --ignore-scripts
       - run: node scripts/test_chart.cjs
       - run: node scripts/test_dropdown.cjs
+      - run: node scripts/test_dashboard.cjs
       - run: python -m build --no-isolation --outdir dist/core core
       - run: python scripts/release.py
       - run: python scripts/check_wheel.py

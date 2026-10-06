@@ -13,3 +13,9 @@ confirmados depois de o GitHub executar o workflow.
 
 Integrações ao vivo, login, qualidade de modelos e cobertura de Antigravity não são
 validados por esta suíte. O relatório anterior da máquina não integra a distribuição.
+
+Validação local desta edição: 35 testes Python aprovados, agregação do gráfico,
+interações do dropdown e fluxo do dashboard aprovados em DOM sintético.
+Wheel independente instalado por extração em diretório temporário e validado.
+Verificação visual final no navegador não foi concluída por indisponibilidade
+da ferramenta de automação; os testes DOM não substituem uma revisão visual.
